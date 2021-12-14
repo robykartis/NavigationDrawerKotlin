@@ -9,11 +9,16 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var toggle: ActionBarDrawerToggle
+    lateinit var drawerLayout: DrawerLayout
+    lateinit var homeFragment: HomeFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,22 +40,32 @@ class MainActivity : AppCompatActivity() {
 //            startActivity(Intent)
 //        }
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawerLayout)
+
+
+
+
+        drawerLayout = findViewById(R.id.drawerLayout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+//        Default Home startup fragments
+        homeFragment = HomeFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout, homeFragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit()
+
         navView.setNavigationItemSelectedListener {
+
+
+            it.isChecked = true
+
             when (it.itemId) {
-                R.id.nav_home -> Toast.makeText(applicationContext, "Menu Home", Toast.LENGTH_SHORT)
-                    .show()
-                R.id.nav_message -> Toast.makeText(
-                    applicationContext,
-                    "Menu Message",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                R.id.nav_home -> replaceFragment(HomeFragment(), it.title.toString())
+                R.id.nav_message -> replaceFragment(MessageFragment(), it.title.toString())
                 R.id.nav_sync -> Toast.makeText(applicationContext, "Menu Sync", Toast.LENGTH_SHORT)
                     .show()
                 R.id.nav_trash -> Toast.makeText(
@@ -58,11 +73,7 @@ class MainActivity : AppCompatActivity() {
                     "Menu Trash",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.nav_setting -> Toast.makeText(
-                    applicationContext,
-                    "Menu  Setting",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.nav_setting -> replaceFragment(SettingFragment(), it.title.toString())
                 R.id.nav_login -> Toast.makeText(
                     applicationContext,
                     "Menu Login",
@@ -80,6 +91,21 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+    }
+
+
+    //    Replace Frament Layouts
+    private fun replaceFragment(fragment: Fragment, title: String) {
+
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentManager.beginTransaction().apply {
+            replace(R.id.frameLayout, homeFragment).commit()
+        }
+        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.commit()
+        drawerLayout.closeDrawers()
+        setTitle(title)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
