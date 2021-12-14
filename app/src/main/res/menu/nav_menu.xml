@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_nav_home"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/nav_message"
+        android:icon="@drawable/ic_nav_message"
+        android:title="@string/nav_message" />
+    <item
+        android:id="@+id/nav_sync"
+        android:icon="@drawable/ic_nav_sync"
+        android:title="@string/nav_sync" />
+    <item
+        android:id="@+id/nav_trash"
+        android:icon="@drawable/ic_nav_delete"
+        android:title="@string/nav_trash" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_nav_setting"
+        android:title="@string/nav_setting" />
+
+    <item android:title="@string/nav_profile">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_nav_login"
+                android:title="@string/nav_login" />
+        </menu>
+    </item>
+    <item android:title="@string/nav_communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_nav_share"
+                android:title="@string/nav_share" />
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_nav_rate_view"
+                android:title="@string/nav_rate_us" />
+        </menu>
+
+    </item>
+</menu>
